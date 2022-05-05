@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>20220506課題</title>
+    <link href="main.css" rel="stylesheet">
+</head>
+
+<body>
+<!----↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ コンテンツ表示画面 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓---->
+<!--------------------------------------------↓↓ タイトル文字 ↓↓------------------------------------------->
+    <header>
+    <div class="container">                         <!-- タイトルテキスト部分の箱 -->
+        <h1 class="title">WEATHER FORECAST</h1>     <!-- タイトルテキスト -->
+    </div>                                          <!-- /.container -->
+    </header>
+
+
+<!--------------------------------------------↓↓ 予報表示枠 ↓↓------------------------------------------->
+    <div class="container">                         <!-- 現在の表示 -->
+        <h2 class="place"></h2>                     <!-- 現在地の情報表示 -->
+        <div class="now">                           <!-- 現在 -->
+            <div id="0_monthdate"></div>            <!-- 日付表示 -->
+            <div id="0_time"></div>                 <!-- 時間表示 -->
+            <div id="0_description"></div>          <!-- 天気表示 -->
+            <div id="0_temp"></div>                 <!-- 温度表示 -->
+            <div id="0_icon"><img src=""></div>     <!-- 画像表示 -->
+        </div>
+
+        <div class="box_container">                 <!-- 未来枠の箱 -->
+            <div class="box">                       <!-- 3時間後 -->
+                <div id="1_monthdate"></div>        <!-- 日付表示 -->
+                <div id="1_time"></div>             <!-- 時間表示 -->
+                <div id="1_description"></div>      <!-- 天気表示 -->
+                <div id="1_temp"></div>             <!-- 温度表示 -->
+                <div id="1_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 6時間後 -->
+                <div id="2_monthdate"></div>        <!-- 日付表示 -->
+                <div id="2_time"></div>             <!-- 時間表示 -->
+                <div id="2_description"></div>      <!-- 天気表示 -->
+                <div id="2_temp"></div>             <!-- 温度表示 -->
+                <div id="2_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 9時間後 -->
+                <div id="3_monthdate"></div>        <!-- 日付表示 -->
+                <div id="3_time"></div>             <!-- 時間表示 -->
+                <div id="3_description"></div>      <!-- 天気表示 -->
+                <div id="3_temp"></div>             <!-- 温度表示 -->
+                <div id="3_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 12時間後 -->
+                <div id="4_monthdate"></div>        <!-- 日付表示 -->
+                <div id="4_time"></div>             <!-- 時間表示 -->
+                <div id="4_description"></div>      <!-- 天気表示 -->
+                <div id="4_temp"></div>             <!-- 温度表示 -->
+                <div id="4_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 15時間後 -->
+                <div id="5_monthdate"></div>        <!-- 日付表示 -->
+                <div id="5_time"></div>             <!-- 時間表示 -->
+                <div id="5_description"></div>      <!-- 天気表示 -->
+                <div id="5_temp"></div>             <!-- 温度表示 -->
+                <div id="5_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 18時間後 -->
+                <div id="6_monthdate"></div>        <!-- 日付表示 -->
+                <div id="6_time"></div>             <!-- 時間表示 -->
+                <div id="6_description"></div>      <!-- 天気表示 -->
+                <div id="6_temp"></div>             <!-- 温度表示 -->
+                <div id="6_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+            <div class="box">                       <!-- 21時間後 -->
+                <div id="7_monthdate"></div>        <!-- 日付表示 -->
+                <div id="7_time"></div>             <!-- 時間表示 -->
+                <div id="7_description"></div>      <!-- 天気表示 -->
+                <div id="7_temp"></div>             <!-- 温度表示 -->
+                <div id="7_icon"><img src=""></div> <!-- 画像表示 -->
+            </div>
+        </div>                                      <!-- /box_container -->
+    </div>                                          <!-- /.container -->
+</body>
+<!----↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ コンテンツ表示画面 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑---->
+
+
+<!-----------------------------------------↓↓ JQuery ↓↓------------------------------------------>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-----------------------------------------↑↑ JQuery ↑↑------------------------------------------>
+
+
+<script>
+//------------------------------------↓↓ 現在位置の取得 ↓↓------------------------------------
+navigator.geolocation.getCurrentPosition(success, fail);            // 現在位置の取得
+
+
+//--------------------------------↓↓ 現在位置が取得できた場合 ↓↓--------------------------------
+function success(pos) {
+    const latitude = pos.coords.latitude;                           // 緯度
+    const longitude = pos.coords.longitude;                         // 経度
+    const url = 'https://api.openweathermap.org/data/2.5/forecast'; // 使用するAPIのURL
+
+//WARNING! ** WARNING! ** WARNING! ** WARNING! ** WARNING! ** WARNING! 
+    const apiKey = 'e648b18322ac81782c027ba2c52bb33c';              // *重要* Githubにアップする際は消すこと *重要*
+//WARNING! ** WARNING! ** WARNING! ** WARNING! ** WARNING! ** WARNING! 
+
+
+//--------------------------------------↓↓ 非同期処理 ↓↓--------------------------------------
+    $.ajax({
+        url: url,                                                   // 使用するAPIのURL
+        data: {                                                     // 取得に必要な情報
+            appid: apiKey,                                          //AppID・ApiKey
+            lat: latitude,                                          // 緯度
+            lon: longitude,                                         // 経度
+            cnt: 8,                                                 // 取得する数（8枠）
+            units: 'metric',                                        // 摂氏
+            lang: 'ja'                                              // 言語（日本語表記）
+        }
+    })
+
+
+//--------------------------------------↓↓ API通信成功時 ↓↓--------------------------------------
+    .done(function (data) {
+        console.log(data);
+
+        $('h2').text(data.city.country + ':' + data.city.name + 'の天気');
+
+        data.list.forEach(function (response, index) {
+
+            const dateTime = new Date(response.dt * 1000);                                           // 取得日時
+            const month = dateTime.getMonth() + 1;                                                   // 月
+            const date = dateTime.getDate();                                                         // 日
+            const time = dateTime.getHours();                                                        // 時間
+            const temp = Math.round(response.main.temp);                                             // 気温
+            const description = response.weather[0].description;                                     // 天気の詳細
+            const icon = response.weather[0].icon;                                                   // 天気アイコン名
+
+            $('#' + index + '_icon').children('img').attr
+                ('src', 'http://openweathermap.org/img/wn/' + icon + '@4x.png');                     // 天気アイコンの場所
+            $('#' + index + '_time').text('日付：' + month + '月' + date + '日' + ' ' + time + ':00'); // 取得した月日
+            $('#' + index + '_description').text('天気：' + description);                             // 天気の詳細
+            $('#' + index + '_temp').text('気温：' + temp + '°C');                                    // 気温
+
+            });
+        })
+
+
+//--------------------------------------↓↓ APIとの通信が失敗した場合 ↓↓--------------------------------------
+        .fail(function () {
+            alert('APIから情報を取得できませんでした。');        //API通信が失敗した場合はこのテキストを表示
+        })
+}
+
+
+//-------------------------------------↓↓ 現在位置が取得できなかった場合 ↓↓-------------------------------------
+function fail(error) {
+    alert('現在位置を取得できませんでした。');                  // 現在位置が取得できなかった場合はこのテキストを表示
+}
+</script>
+
+
+<!------------------------------------------------↓↓ 背景動画 ↓↓------------------------------------------------>
+<html>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.9/css/jquery.mb.YTPlayer.min.css">
+<div id="ytPlayer" data-property="{
+        videoURL: 'https://www.youtube.com/watch?v=Ckp-PnWIr3E',
+        autoPlay: true,
+        loop: 1,
+        mute: true,
+        showControls: false,
+        showYTLogo: false,
+    }">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.9/jquery.mb.YTPlayer.min.js"></script>
+    <script>
+        $(function () {
+            $("#ytPlayer").YTPlayer();
+        });
+    </script>
+<!------------------------------------------------↑↑ 背景動画 ↑↑------------------------------------------------->
+
+</body>
+
+</html>
+

@@ -1,0 +1,48 @@
+@charset "UTF-8";
+main .container {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+console.log(container);
+/*-------------------------↓ 天気予報タイトルバック部分 ↓-------------------------*/
+header .container {
+    margin: 0 auto;                                   /* ヘッダー枠の中央寄せ*/
+    background-color: #f6e95c;                      /* ヘッダー枠のバックカラー*/
+    max-width: 410px;                                 /* ヘッダー枠の横幅*/
+}
+/*-----------------------------↓ タイトル文字部分 ↓-----------------------------*/
+.title {
+    text-align: center;                               /* 画面中央に表示する*/
+    color: rgb(60, 61, 51);                         /* 「天気予報」部分の文字色*/
+    border: 1px solid rgb(227, 226, 226);           /* フレームカラー*/
+}
+/*-------------------------------↓ 現在時刻部分 ↓-------------------------------*/
+.place {
+    text-align: center;                               /* 現在場所テキスト中央寄せ*/
+    color:aliceblue                                 /* 現在場所テキストの文字色*/
+}
+.now {
+    margin: 0 auto;                                   /* 全体中央寄せ*/
+    margin-bottom: 15px;                              /* 未来予報（下部）とのマージンボトム*/
+    background-color: #aaddfa;                      /* 現在時刻予報枠のバックカラー*/
+    border: 1px solid rgb(227, 226, 226);           /* 現在時刻予報枠のフレームカラー*/
+    min-height: 250px;                                /* 現在時刻予報枠の縦幅*/
+    text-align: center;                               /* 現在時刻予報枠内の画像中心寄せ*/
+    max-width: 400px                                  /* 現在時刻予報枠の横幅*/
+}
+/*----------------------------↓ 未来予報（下部）部分 ↓----------------------------*/
+.box {
+    height: 230px;                                    /* 未来予報（下部）枠の縦幅*/
+    width: 230px;                                     /* 未来予報（下部）枠の横幅*/
+    margin: 10px;                                     /* 未来予報（下部）枠の間隔幅*/
+    background-color: #aaddfa;                      /* 未来予報（下部）枠のバックカラー*/
+    border: 1px solid rgb(227, 226, 226);           /* 現在時刻予報枠のフレームカラー*/
+    text-align: center;                               /* 未来予報（下部）枠の画像中心寄せ*/
+}
+.box_container {
+    margin: 0 auto;                                   /* 未来予報（下部）枠の中央寄せ*/
+    max-width: 1000px;
+    text-align: center;
+    display: flex;                                    /* 未来予報（下部）枠、縦並びを横並びに*/
+    justify-content: center;
+}
